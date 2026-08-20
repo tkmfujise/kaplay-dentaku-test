@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Kaplay Calculator"
+description = "A playful, responsive calculator built with Kaplay.js for quick arithmetic on desktop and mobile browsers."
+version = "1.0.0"
+id = "artifacts/kaplay-calculator"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21956
+
+[services.development]
+run = "pnpm --filter @workspace/kaplay-calculator run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kaplay-calculator", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/kaplay-calculator/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21956"
+BASE_PATH = "/"
